@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 const HomePage = lazy(() => import("./pages/Home"));
 const AboutPage = lazy(() => import("./pages/About"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
@@ -62,6 +63,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
