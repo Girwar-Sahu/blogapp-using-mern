@@ -27,6 +27,16 @@ const connect = async () => {
 app.use("/api", userRoute);
 app.use("/api/auth", authRoute);
 
+app.use((error,req,res,next)=>{
+  const statusCode = error.statusCode || 500
+  const message = error.message || "internal server error"
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message
+  })
+})
+
 app.listen(5000, () => {
   connect();
   console.log(`server running on port 5000`);
