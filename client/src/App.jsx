@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 const HomePage = lazy(() => import("./pages/Home"));
 const AboutPage = lazy(() => import("./pages/About"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
@@ -30,14 +31,16 @@ function App() {
             </Suspense>
           }
         />
-        <Route
-          path="/dashboard"
-          element={
-            <Suspense fallback={<p>Loading...</p>}>
-              <DashboardPage />
-            </Suspense>
-          }
-        />
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense fallback={<p>Loading...</p>}>
+                <DashboardPage />
+              </Suspense>
+            }
+          />
+        </Route>
         <Route
           path="/project"
           element={
