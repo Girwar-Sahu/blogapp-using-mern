@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../axios.config.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  singInStart,
+  singInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice.js";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, error} = useSelector((state) => state.user)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -16,23 +22,22 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all flelds.");
+      return dispatch(singInFailure("Please fill all the fields"))
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(singInStart());
       const res = await api.post("/auth/signin", JSON.stringify(formData));
       const data = res.data;
-      setLoading(false);
+     
       if (data.success === false) {
-        return setErrorMessage(data.message);
+        return dispatch(singInFailure(data.message));
       }
       if (res.statusText === "OK") {
-        navigate("/user");
+        dispatch(signInSuccess(data));
+        navigate("/");
       }
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      dispatch(singInFailure(error.message));
     }
   };
 
@@ -92,9 +97,9 @@ function SignIn() {
               Sign Up
             </Link>
           </div>
-          {errorMessage && (
+          {error && (
             <Alert className="mt-5" color="failure">
-              {errorMessage}
+              {error}
             </Alert>
           )}
         </div>
