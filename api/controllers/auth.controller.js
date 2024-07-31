@@ -48,13 +48,55 @@ export const signin = async (req, res, next) => {
       return next(errorHandler(400, "invalid username or password"));
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-    const { password:pass, ...dtl } = validUser._doc;
+    const { password: pass, ...dtl } = validUser._doc;
     res
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
       })
       .json(dtl);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const googleAuth = async (req, res, next) => {
+  const { name, email, photoURL } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password, ...dtl } = user._doc;
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(dtl);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+      const newUser = new User({
+        username:
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+        email: email,
+        password: hashPassword,
+        photoURL,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password, ...dtl } = newUser._doc;
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(dtl);
+    }
   } catch (error) {
     next(error);
   }
