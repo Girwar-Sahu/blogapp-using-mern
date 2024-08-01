@@ -12,7 +12,7 @@ import OAuth from "../components/OAuth.jsx";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const {loading, error} = useSelector((state) => state.user)
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -23,19 +23,20 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return dispatch(singInFailure("Please fill all the fields"))
+      return dispatch(singInFailure("Please fill all the fields"));
     }
     try {
       dispatch(singInStart());
       const res = await api.post("/auth/signin", JSON.stringify(formData));
+      console.log(res);
       const data = res.data;
-     
+
       if (data.success === false) {
         return dispatch(singInFailure(data.message));
       }
       if (res.statusText === "OK") {
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/dashboard?tab=profile");
       }
     } catch (error) {
       dispatch(singInFailure(error.message));
