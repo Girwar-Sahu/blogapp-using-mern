@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../axios.config.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  singUpStart,
-  singUpFailure,
+  signUpStart,
+  signUpFailure,
   signUpSuccess,
 } from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth.jsx";
@@ -23,21 +23,21 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      return dispatch(singInFailure("Please fill all the fields"));
+      return dispatch(signUpFailure("Please fill all the fields"));
     }
     try {
-      dispatch(singUpStart());
+      dispatch(signUpStart());
       const res = await api.post("/auth/signup", JSON.stringify(formData));
       const data = res.data;
       if (data.success === false) {
-        return dispatch(singUpFailure(data.message));
+        return dispatch(signUpFailure(data.message));
       }
       if (res.statusText === "OK") {
         dispatch(signUpSuccess());
         navigate("/signin");
       }
     } catch (error) {
-      dispatch(singUpFailure(error.message));
+      dispatch(signUpFailure(error.message));
     }
   };
 
