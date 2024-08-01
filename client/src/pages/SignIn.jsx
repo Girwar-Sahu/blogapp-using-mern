@@ -28,7 +28,7 @@ function SignIn() {
     try {
       dispatch(singInStart());
       const res = await api.post("/auth/signin", JSON.stringify(formData));
-      console.log(res);
+      // console.log(res);
       const data = res.data;
 
       if (data.success === false) {
