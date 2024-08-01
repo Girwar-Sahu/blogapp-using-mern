@@ -1,7 +1,7 @@
 import express from "express";
-import { test } from "../controllers/user.controller.js";
+import { updateUser } from "../controllers/user.controller.js";
+import { varifyToken } from "../utils/varifyUser.js";
 const router = express.Router();
 
-router.get("/",test);
-
+router.put("/update/:userId", varifyToken, updateUser);
 export default router;
