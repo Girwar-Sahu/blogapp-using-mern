@@ -2,6 +2,7 @@ import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -24,7 +25,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 function DashProfile() {
   const dispatch = useDispatch();
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [uploadImageProgress, setUploadImageProgress] = useState(null);
@@ -216,9 +217,20 @@ function DashProfile() {
           placeholder="password"
           onChange={handleChange}
         />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+        <Button type="submit" gradientDuoTone="purpleToBlue" outline disabled={loading || imageUploading}>
+          {loading ? 'Loading...': "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to="/create-post">
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              className="w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between my-4">
         <span onClick={() => setShowModal(true)} className="cursor-pointer">
