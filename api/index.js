@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
+import postRoute from "./routes/post.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -35,6 +36,7 @@ const connect = async () => {
 
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/post", postRoute);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
