@@ -8,16 +8,20 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 import { app } from "../firebase.js";
+import api from "../axios.config.js";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 function CreatePost() {
-  const [value, setValue] = useState("");
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [publishError, setPublishError] = useState(null);
+
   const handleUploadImage = async () => {
     try {
       if (!file) {
@@ -53,10 +57,31 @@ function CreatePost() {
       setImageUploadProgress(null);
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setPublishError(null);
+    try {
+      const res = await api.post("/post/create", JSON.stringify(formData));
+      const data = res.data;
+
+      if (data.success === false) {
+        setPublishError(data.message);
+        return;
+      }
+      if (res.statusText === "Created") {
+        setPublishError(null);
+        navigate(`/post/${data.slug}`);
+      }
+    } catch (error) {
+      setPublishError(error.message);
+    }
+  };
+
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen ">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row justify-between ">
           <TextInput
             type="text"
@@ -64,8 +89,16 @@ function CreatePost() {
             required
             id="title"
             className="flex-1"
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
           />
-          <Select required>
+          <Select
+            required
+            onChange={(e) =>
+              setFormData({ ...formData, category: e.target.value })
+            }
+          >
             <option value="uncategorized">Select a category</option>
             <option value="javascript">javaScript</option>
             <option value="reactjs">reactJs</option>
@@ -77,7 +110,6 @@ function CreatePost() {
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
           <FileInput
             onChange={(e) => setFile(e.target.files[0])}
-            required
             type="file"
             accept="image/*"
           />
@@ -112,13 +144,13 @@ function CreatePost() {
           className="h-72 mb-12"
           theme="snow"
           placeholder="Write something..."
-          value={value}
-          onChange={setValue}
+          onChange={(value) => setFormData({ ...formData, content: value })}
           required
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
           Publish
         </Button>
+        {publishError && <Alert color="failure">{publishError}</Alert>}
       </form>
     </div>
   );
