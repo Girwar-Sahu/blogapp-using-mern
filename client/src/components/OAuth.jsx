@@ -29,7 +29,7 @@ function OAuth() {
       console.log(data);
       if (res.statusText === "OK") {
         dispatch(signInSuccess(data));
-        navigate('/')
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -42,8 +42,10 @@ function OAuth() {
       outline
       onClick={handleGoogleClick}
     >
-      <AiFillGoogleCircle className="w-6 h-6 mr-2" />
-      Continue with Google
+      <span>
+        <AiFillGoogleCircle className="w-6 h-6 mr-2" />
+      </span>
+      <span>Continue with Google</span>
     </Button>
   );
 }
