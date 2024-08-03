@@ -11,6 +11,7 @@ const ProjectPage = lazy(() => import("./pages/Projects"));
 const SignInPage = lazy(() => import("./pages/SignIn"));
 const SignUpPage = lazy(() => import("./pages/SignUp"));
 const CreatePostPage = lazy(() => import("./pages/CreatePost"));
+const UpdatePostPage = lazy(() => import("./pages/UpdatePost"));
 
 function App() {
   return (
@@ -73,6 +74,14 @@ function App() {
             element={
               <Suspense fallback={<p>Loading...</p>}>
                 <CreatePostPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/update-post/:postId"
+            element={
+              <Suspense fallback={<p>Loading...</p>}>
+                <UpdatePostPage />
               </Suspense>
             }
           />
