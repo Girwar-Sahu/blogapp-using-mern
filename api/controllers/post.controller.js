@@ -29,6 +29,15 @@ export const createPost = async (req, res, next) => {
 
 export const getPost = async (req, res, next) => {
   try {
+    const post = await Post.findById(req.params.postId);
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPosts = async (req, res, next) => {
+  try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
@@ -48,6 +57,10 @@ export const getPost = async (req, res, next) => {
       .skip(startIndex)
       .limit(limit);
 
+    const postWithoutContent = posts.map((post) => {
+      const { content, ...rest } = post._doc;
+      return rest;
+    });
     const totalPost = await Post.countDocuments();
     const now = new Date();
     const oneMonthAgo = new Date(
@@ -59,7 +72,7 @@ export const getPost = async (req, res, next) => {
       createdAt: { $gte: oneMonthAgo },
     });
     res.status(200).json({
-      posts,
+      posts: postWithoutContent,
       totalPost,
       lastMonthPost,
     });

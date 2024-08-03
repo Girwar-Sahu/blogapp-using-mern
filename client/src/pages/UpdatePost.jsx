@@ -28,24 +28,23 @@ function UpdatePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await api.get(`/post/getposts?postId=${postId}`);
+        const res = await api.get(`/post/getpost/${postId}`);
         const data = res.data;
 
         if (data.success === false) {
-          console.log(data.message);
           setPublishError(data.message);
           return;
         }
         if (res.statusText === "OK") {
           setPublishError(null);
-          setFormData(data.posts[0]);
+          setFormData(data);
         }
       } catch (error) {
         setPublishError(null);
       }
     };
     fetchPost();
-  }, [postId]);
+  }, [postId],formData);
 
   const handleUploadImage = async () => {
     try {
