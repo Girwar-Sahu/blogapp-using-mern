@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+const DashProfile = lazy(()=> import('../components/DashProfile'))
+const DashPost = lazy(()=> import('../components/DashPost'))
+const DashUsers = lazy(()=> import('../components/DashUsers'))
 import DashSidebar from "../components/DashSidebar";
-import DashProfile from "../components/DashProfile";
-import DashPost from "../components/DashPost";
+
 
 function Dashboard() {
   const location = useLocation();
@@ -21,8 +23,21 @@ function Dashboard() {
       <div className="md:w-56">
         <DashSidebar />
       </div>
-      {tab === "profile" && <DashProfile />}
-      {tab === 'post' && <DashPost />}
+      {tab === "profile" && (
+        <Suspense fallback={<p>Loading...</p>}>
+          <DashProfile />
+        </Suspense>
+      )}
+      {tab === "post" && (
+        <Suspense fallback={<p>Loading...</p>}>
+          <DashPost />
+        </Suspense>
+      )}
+      {tab === "users" && (
+        <Suspense fallback={<p>Loading...</p>}>
+          <DashUsers />
+        </Suspense>
+      )}
     </div>
   );
 }
