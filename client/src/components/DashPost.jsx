@@ -94,7 +94,7 @@ function DashPost() {
                     {new Date(post.updatedAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/post/${post.slug}`}>
+                    <Link to={`/post/${post._id}`}>
                       <img
                         className="w-20 h-10 object-cover bg-gray-500"
                         src={post.imageURL}
@@ -105,7 +105,7 @@ function DashPost() {
                   <Table.Cell>
                     <Link
                       className="font-medium text-gray-500 dark:text-white"
-                      to={`/post/${post.slug}`}
+                      to={`/post/${post._id}`}
                     >
                       {post.title}
                     </Link>

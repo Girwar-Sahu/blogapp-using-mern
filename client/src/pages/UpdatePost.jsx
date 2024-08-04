@@ -99,7 +99,7 @@ function UpdatePost() {
       }
       if (res.statusText === "OK") {
         setPublishError(null);
-        navigate(`/post/${data.slug}`);
+        navigate(`/post/${data._id}`);
       }
     } catch (error) {
       setPublishError(error.message);

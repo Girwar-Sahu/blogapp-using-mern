@@ -1,0 +1,353 @@
+<h2>Bard vs ChatGPT: What’s the difference?</h2>
+<p>
+  The biggest difference between ChatGPT and Bard is the Large Language Models
+  (LLMs) they are powered by. ChatGPT uses the Generative Pre-trained
+  Transformer 4 (<a
+    href="https://www.pluralsight.com/blog/machine-learning/gpt-4-and-chatgpt-update"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >GPT-4</a
+  >), while Bard uses the Language Model for Dialogue Applications (<a
+    href="https://blog.google/technology/ai/lamda/"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >LaMBDA</a
+  >). Also, ChatGPT is developed by OpenAI, while Bard was built by Google.
+</p>
+<p>
+  In terms of capabilities, both do very similar things. Programmers can use
+  ChatGPT for:
+</p>
+<ul>
+  <li>
+    Suggestions:&nbsp;Both models can suggest the correct syntax and parameters
+    for functions and other code constructs.
+  </li>
+  <li>Completion:&nbsp;It can complete code that you have started writing.</li>
+  <li>
+    Debugging:&nbsp;It can help you identify errors and problems in your code.
+  </li>
+  <li>
+    Explanation:&nbsp;It can explain the code that it generates, or code you
+    input.
+  </li>
+</ul>
+<p>
+  Both models were trained on a massive dataset, including Common Crawl,
+  Wikipedia, books, articles, documents, and content scraped from the internet.
+  However, Bard is a little different in that it was trained on conversations
+  and dialogues from the web, while ChatGPT was trained mostly on scraped
+  general content.
+</p>
+<p>
+  Both products are still under development, Bard a bit more so than ChatGPT.
+  But to really show how these differences actually matter in a practical sense,
+  here’s how they work when tested against each other.
+</p>
+<h2>Testing ChatGPT and Bard against each other</h2>
+<p>
+  We chose seven categories to test the chatbots against each other, based on
+  what we felt were the most relevant:&nbsp;code generation,&nbsp;problem
+  solving,&nbsp;refactoring code,&nbsp;debugging assistance,&nbsp;third-party
+  plugins/UI extension,&nbsp;ease of use, and&nbsp;cost. Let's preface this by
+  saying this is not a rigorous scientific comparison, but rather a handful of
+  tests mixed with our hands-on experience to date.
+</p>
+<p><br /></p>
+<h3>1. Code generation</h3>
+<p>
+  The bread and butter of what we want it for, right? For this, we fed in the
+  following prompt:&nbsp;<em
+    >"Write a function in python that returns a list of 100 prime
+    numbers."&nbsp;</em
+  >
+</p>
+<p><br /></p>
+<h4>Bard's coding attempt</h4>
+<p><br /></p>
+<pre class="ql-syntax" spellcheck="false">
+def get_prime_numbers(n):
+  """Returns a list of prime numbers up to n."""
+  primes = []
+  for i in range(2, n + 1):
+    is_prime = True
+    for j in range(2, i):
+      if i % j == 0:
+        is_prime = False
+        break
+    if is_prime:
+      primes.append(i)
+  return primes
+
+
+def main():
+  """Prints a list of 100 prime numbers."""
+  primes = get_prime_numbers(100)
+  print(primes)
+
+
+if __name__ == "__main__":
+  main()
+</pre>
+<p>
+  Looks solid, but does it work? In our experience, chatbots can sometimes
+  create code that&nbsp;<em>doesn't</em>&nbsp;run, even going as far as to
+  invent functions! That's one reason having&nbsp;<a
+    href="https://www.pluralsight.com/blog/machine-learning/regenerative-auto-code-ai-gpt"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >AI-generated code in production with no human oversight</a
+  >&nbsp;would be very bad. So let's test it out and see.
+</p>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/bard-codetest.png"
+    alt="Checking the result of a bard code test"
+  />
+</p>
+<p><br /></p>
+<h4>ChatGPT's coding attempt</h4>
+<p><br /></p>
+<pre class="ql-syntax" spellcheck="false">
+def generate_primes(n):
+    primes = []
+    sieve = [True] * (n + 1)
+    for current in range(2, n + 1):
+        if sieve[current] != 0:
+            primes.append(current)
+            for multiple in range(current, n + 1, current):
+                sieve[multiple] = False
+    return primes
+
+# Generate first 100 prime numbers
+# The 100th prime number is 541, so we set the limit to 550 to make sure we get at least 100 primes
+primes_100 = generate_primes(550)[:100]
+print(primes_100)
+</pre>
+<p>
+  When we run the same prompt by ChatGPT, this code defines a
+  function&nbsp;generate_primes(n)&nbsp;that takes an integer&nbsp;n&nbsp;as
+  input and returns a list of all prime numbers up to n. It uses the&nbsp;<a
+    href="https://www.topcoder.com/thrive/articles/sieve-of-eratosthenes-algorithm"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >Sieve of Eratosthenes algorithm</a
+  >&nbsp;to generate the primes.
+</p>
+<p>
+  Both of these produced a functional result. ChatGPT's example is better in
+  this case, since it's cleaner and has much less code. Also, it interpreted our
+  vague prompt correctly. However, this&nbsp;<em>is&nbsp;</em>only one use-case:
+  it's known that chatbots will vary a lot in their response depending on the
+  language they are using (With less common or documented languages having more
+  errors) or the complexity of the query. So let's see how Bard and ChatGPT
+  handle different use cases.
+</p>
+<h4>Winner:&nbsp;ChatGPT&nbsp;🏆</h4>
+<p><br /></p>
+<h3>2. Problem Solving</h3>
+<p>
+  Let's see how of these LLMs handle a problem. Rather than just asking them to
+  write a generic function, let's throw a programming problem at them
+  from&nbsp;<a
+    href="https://leetcode.com/"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >Leetcode</a
+  >:
+</p>
+<p>
+  <em
+    >Write JavaScript code that enhances all arrays such that you can call the
+    array.last() method on any array and it will return the last element. If
+    there are no elements in the array, it should return -1.</em
+  >
+</p>
+<h4>ChatGPT's problem solving</h4>
+<p><br /></p>
+<pre class="ql-syntax" spellcheck="false">
+Here's how you would do it in JavaScript:
+
+Array.prototype.last = function() {
+  if (this.length === 0) {
+    return -1;
+  } else {
+    return this[this.length - 1];
+  }
+};
+
+In this code:
+
+Array.prototype.last adds a new method called last to the Array.prototype object. This ensures that all arrays will have this method.
+
+this refers to the array object on which the last method is being called.
+this.length gives the number of elements in the array.
+If the array is empty (this.length === 0), the method returns -1.
+Otherwise, the method returns the last element of the array: this[this.length - 1].
+
+Here is how you would use it:
+
+let array = [1, 2, 3, 4, 5];
+console.log(array.last()); // prints: 5
+
+array = [];
+console.log(array.last()); // prints: -1
+
+Remember that extending built-in JavaScript objects like Array is generally not recommended, as it can lead to conflicts if the JavaScript environment (like a browser or Node.js) adds a method with the same name. This is generally called monkey patching and is usually avoided in production-grade code. But for quick and dirty hacks, or to understand how JavaScript works, it's a fun tool to use!
+</pre>
+<p>
+  Not only does ChatGPT solve the problem, but it&nbsp;<em
+    >explains the problem</em
+  >. Neat! Let's run the code through leetcode and see if it actually passes the
+  tests, though.
+</p>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/leetcode1.png"
+    alt="Testing ChatGPT's problem solving with leetcode"
+  />
+</p>
+<p>
+  It looks like ChatGPT solved the problem on the first try! Now it's time for
+  Bard to step up to the plate.
+</p>
+<p><br /></p>
+<h4>Bard's problem solving</h4>
+<p><br /></p>
+<pre class="ql-syntax" spellcheck="false">
+Sure, here is the JavaScript code that enhances all arrays such that you can call the array.last() method on any array and it will return the last element. If there are no elements in the array, it should return -1:
+
+
+// Define a new method on the Array prototype
+Array.prototype.last = function() {
+  // If the array is empty, return -1
+  if (this.length === 0) {
+    return -1;
+  }
+
+  // Otherwise, return the last element
+  return this[this.length - 1];
+};
+
+
+Here is an example of how to use the array.last() method:
+
+
+const array = [1, 2, 3, 4, 5];
+
+// Get the last element of the array
+const lastElement = array.last();
+
+// Print the last element of the array
+console.log(lastElement); // 5
+</pre>
+<p>
+  Okay, so we didn't get as thorough an explanation from Bard about how the code
+  works. However, it's nearly identical when you compare what ChatGPT and Bard
+  produced. Were they looking at each other's homework?
+</p>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/problemsolving1.png"
+    alt="ChatGPT vs Bard comparing problem solving"
+  />
+</p>
+<p>
+  Naturally, we can't take Bard's word at it, so we run the test through
+  Leetcode, and...
+</p>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/leetcode2%20(2).png"
+    alt="Testing Bard's problem solving with Leetcode"
+  />
+</p>
+<p>
+  ... It works! Which is to be expected, given the answer was nearly identical
+  to ChatGPT's.
+</p>
+<p>
+  When it comes to problem solving, it's a tough call between the two. While
+  they produce nearly identical results, ChatGPT explains the code much better
+  for you, which is pretty good for actually learning how to fish instead of
+  having ChatGPT just fish for you.&nbsp;This has been our overall experience
+  with using ChatGPT: not only do you get a possible solution for your problem,
+  but ChatGPT walks you through it a bit more.
+</p>
+<h4>Winner:&nbsp;ChatGPT&nbsp;🏆</h4>
+<p><br /></p>
+<h3>3. Refactoring Code</h3>
+<p>
+  Let's say you want to find a more optimized way to do something. It's great to
+  get a different viewpoint on your code, and unlike your teammates (assuming
+  you have them), these tools are always free and ready to check over your code.
+  So let's see how it does! Here's the sample we provided it.
+</p>
+<p><br /></p>
+<pre class="ql-syntax" spellcheck="false">
+What is a more optimized way to write this code?
+
+Array.prototype.last = function() {
+  if (this.length === 0) {
+    return -1;
+  } else {
+    return this[this.length - 1];
+  }
+};
+</pre>
+<h4>ChatGPT's refactoring attempt</h4>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/debugging-chatgpt.png"
+    alt="Refactoring with ChatGPT"
+  />
+</p>
+<p><br /></p>
+<p>
+  So ChatGPT's given us a pretty vague response. It vaguely explains the code
+  and suggests a ternary operator, which is fine and worth checking out.
+  However, it feels like it could have done a bit more. Let's see how Bard
+  handles the same assignment.
+</p>
+<p><br /></p>
+<h4>Bard's refactoring attempt</h4>
+<p><br /></p>
+<p>
+  <img
+    src="https://www.pluralsight.com/content/dam/ps/images/resource-center/blog/screenshots/ai/chatgpt/chatgpt-vs-bard-snaps/debugging-bard.png"
+    alt="Bard's attempt at debugging code"
+  />
+</p>
+<p><br /></p>
+<p>
+  Wow! The difference between ChatGPT and Bard is like chalk and cheese: Bard
+  has clearly gone above and beyond.&nbsp;Not only does it offer optimized code,
+  but it shows code to create a benchmark, and shows benchmark results.
+</p>
+<p>
+  Overall, we've found Bard is a bit better at refactoring. Part of this is
+  likely because Bard uses search engine information on top of being a Large
+  Language Model (LLM), while ChatGPT is currently just an LLM. However, I
+  should state that ChatGPT&nbsp;<em>is&nbsp;</em>currently beta-testing
+  a&nbsp;<a
+    href="https://www.pluralsight.com/blog"
+    rel="noopener noreferrer"
+    target="_blank"
+    style="color: rgb(236, 0, 140)"
+    >"Search with Bing"</a
+  >&nbsp;feature and rolling this out to free users, so ChatGPT may become a
+  whole lot better at refactoring code very soon. But for now, we have to give
+  the win to Bard.
+</p>
+<h4>Winner:&nbsp;Bard 🏆</h4>
+<p><br /></p>
