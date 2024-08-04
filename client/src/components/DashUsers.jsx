@@ -52,11 +52,12 @@ function DashUsers() {
     }
   };
 
+
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
       const res = await api.delete(
-        `/user/delete/${userIdToDelete}/${currentUser._id}`
+        `/user/delete/${userIdToDelete}`
       );
       const data = res.data;
       if (res.statusText === "OK") {

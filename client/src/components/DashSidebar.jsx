@@ -6,7 +6,9 @@ import {
   HiArrowSmRight,
   HiDocumentText,
   HiOutlineUserGroup,
+  HiOutlinePlusCircle,
 } from "react-icons/hi";
+
 import { signoutSuccess } from "../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../axios.config.js";
@@ -56,28 +58,36 @@ function DashSidebar() {
             </Sidebar.Item>
           </Link>
           {currentUser.isAdmin && (
-            <Link to="/dashboard?tab=post">
-              <Sidebar.Item
-                active={tab === "post"}
-                icon={HiDocumentText}
-                as="div"
-              >
-                Post
-              </Sidebar.Item>
-            </Link>
+            <>
+              <Link to="/dashboard?tab=newpost">
+                <Sidebar.Item
+                  active={tab === "newpost"}
+                  icon={HiOutlinePlusCircle}
+                  as="div"
+                >
+                  New post
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=post">
+                <Sidebar.Item
+                  active={tab === "post"}
+                  icon={HiDocumentText}
+                  as="div"
+                >
+                  Posts
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=users">
+                <Sidebar.Item
+                  active={tab === "users"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Users
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
-          {currentUser.isAdmin && (
-            <Link to="/dashboard?tab=users">
-              <Sidebar.Item
-                active={tab === "users"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Users
-              </Sidebar.Item>
-            </Link>
-          )}
-
           <Sidebar.Item
             onClick={handleSignOut}
             icon={HiArrowSmRight}
