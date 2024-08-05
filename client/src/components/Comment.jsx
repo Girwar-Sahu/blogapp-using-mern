@@ -1,91 +1,48 @@
-import { Alert, Button, Textarea } from "flowbite-react";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import api from "../axios.config.js";
+import moment from "moment";
 
-function Comment({ postId }) {
-  const { currentUser } = useSelector((state) => state.user);
-  const [comment, setComment] = useState("");
-  const [commentError, setCommentError] = useState(null);
-
-  const handleSubmit = async (e) => {
-    setCommentError(null);
-    e.preventDefault();
-    if (comment.length > 200) {
-      return;
-    }
-    try {
-      const res = await api.post(
-        "/comment/create",
-        JSON.stringify({
-          content: comment,
-          postId: postId,
-          userId: currentUser._id,
-        })
-      );
-      const data = res.data;
-
-      if (data.success === false) {
-        setCommentError(data.message);
+function Comment({ comment }) {
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await api.get(`/user/${comment.userId}`);
+        const data = res.data;
+        if (data.success === false) {
+          console.log(data.message);
+        }
+        if (res.statusText === "OK") {
+          setUser(data);
+        }
+      } catch (error) {
+        console.log(error.message);
       }
-      if (res.statusText === "OK") {
-        setComment("");
-        setCommentError(null);
-      }
-    } catch (error) {
-      setCommentError(error.message);
-    }
-  };
+    };
+    fetchUser();
+  }, [comment]);
 
   return (
-    <div className="max-w-2xl mx-auto w-full p-3">
-      {currentUser ? (
-        <div className="flex items-center gap-1 my-5 text-gray-500 text-xs">
-          <p>signed in as:</p>
-          <img
-            className="h-5 w-5 object-cover rounded-full"
-            src={currentUser.photoURL}
-            alt="user profile"
-          />
-          <Link
-            className="text-xs text-cyan-600 hover:underline"
-            to="/dashboard?tab=profile"
-          >
-            @{currentUser.username}
-          </Link>
+    <div className="flex p-4 border-b border-gray-600 text-sm">
+      <div className="flex-shrink-0 mr-3">
+        <img
+          className="w-10 h-10 rounded-full bg-gray-200"
+          src={user.photoURL}
+          alt={user.username}
+        />
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center mb-1">
+          <span className="font-bold mr-1 text-xs truncate">
+            {user ? `@${user.username}` : `anonymous user`}
+          </span>
+          <span className="text-gray-500 text-xs">
+            {moment(comment.createdAt).fromNow()}
+          </span>
         </div>
-      ) : (
-        <div className="text-sm text-teal-500 my-5 flex gap-2">
-          You must be login to comment
-          <Link className="text-blue-500 hover:underline" to="/signin">
-            Sign In
-          </Link>
-        </div>
-      )}
-      {currentUser && (
-        <form
-          onSubmit={handleSubmit}
-          className="border border-teal-500 rounded-md p-3"
-        >
-          <Textarea
-            onChange={(e) => setComment(e.target.value)}
-            value={comment}
-            placeholder="leave a comment.."
-            rows="3"
-            maxLength="200"
-          />
-          <div className="flex justify-between items-center mt-5">
-            <p className="text-gray-500 text-xs">
-              {200 - comment.length} characters remaining
-            </p>
-            <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-              Add comment
-            </Button>
-          </div>
-          {commentError && <Alert color="failure">{commentError}</Alert>}
-        </form>
-      )}
+        <p className="text-gray-500 mb-2">{comment.content}</p>
+      </div>
+
     </div>
   );
 }
