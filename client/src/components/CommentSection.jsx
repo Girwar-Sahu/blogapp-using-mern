@@ -1,7 +1,7 @@
 import { Alert, Button, Textarea } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../axios.config.js";
 import Comment from "./Comment.jsx";
 
@@ -10,6 +10,7 @@ function CommentSection({ postId }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [commentError, setCommentError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -41,7 +42,7 @@ function CommentSection({ postId }) {
         "/comment/create",
         JSON.stringify({
           content: comment,
-          postId: postId,
+          postId,
           userId: currentUser._id,
         })
       );
@@ -57,6 +58,32 @@ function CommentSection({ postId }) {
       }
     } catch (error) {
       setCommentError(error.message);
+    }
+  };
+
+  const handleLike = async (commentId) => {
+    try {
+      if (!currentUser) {
+        navigate("/signin");
+        return;
+      }
+      const res = await api.put(`/comment/like/${commentId}`);
+      const data = res.data;
+      if (res.statusText === "OK") {
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -105,7 +132,11 @@ function CommentSection({ postId }) {
               Add comment
             </Button>
           </div>
-          {commentError && <Alert color="failure">{commentError}</Alert>}
+          {commentError && (
+            <Alert color="failure" className="mt-5">
+              {commentError}
+            </Alert>
+          )}
         </form>
       )}
       {comments.length === 0 ? (
@@ -118,9 +149,14 @@ function CommentSection({ postId }) {
               <p>{comments.length}</p>
             </div>
           </div>
-          {comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
-          ))}
+          {comments &&
+            comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                onLike={handleLike}
+              />
+            ))}
         </>
       )}
     </div>
