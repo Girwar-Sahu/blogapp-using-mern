@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../axios.config.js";
 import { Button, Spinner } from "flowbite-react";
+import CalltoAction from "../components/CalltoAction.jsx";
 
 function Post() {
   const { postId } = useParams();
@@ -49,7 +50,7 @@ function Post() {
         className="self-center mt-5"
         to={`/search?category=${post && post.category}`}
       >
-        <Button color="red" size="xs">
+        <Button color="gray" size="xs">
           {post && post.category}
         </Button>
       </Link>
@@ -68,6 +69,9 @@ function Post() {
         dangerouslySetInnerHTML={{ __html: post && post.content }}
         className="p-3 mx-auto max-w-3xl w-full post-content"
       ></div>
+      <div className="max-w-4xl mx-auto w-full">
+        <CalltoAction />
+      </div>
     </main>
   );
 }
