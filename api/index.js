@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
+import commentRoute from "./routes/comment.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
 };
 
@@ -19,7 +20,6 @@ const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
 };
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -37,11 +37,11 @@ const connect = async () => {
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
+app.use("/api/comment", commentRoute);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
   const message = error.message || "internal server error";
-  // console.log(statusCode, message);
   return res.json({
     success: false,
     statusCode,

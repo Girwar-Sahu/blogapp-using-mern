@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import api from "../axios.config.js";
 import { Button, Spinner } from "flowbite-react";
 import CalltoAction from "../components/CalltoAction.jsx";
+import Comment from "../components/Comment.jsx";
 
 function Post() {
   const { postId } = useParams();
@@ -72,6 +73,7 @@ function Post() {
       <div className="max-w-4xl mx-auto w-full">
         <CalltoAction />
       </div>
+      <Comment postId={post && post._id} />
     </main>
   );
 }

@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Serif+Text&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Serif+Text&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
   height: 100vh;
@@ -29,15 +29,15 @@ body {
 }
 
 .post-content a {
-  color: rgb(73,149,199);
+  color: rgb(73, 149, 199);
   text-decoration: none;
 }
 
-.post-content a:hover{
+.post-content a:hover {
   text-decoration: underline;
 }
 
-.dark .post-content pre{
+.dark .post-content pre {
   background-color: rgba(24, 23, 23, 0.632);
   padding: 1.5rem;
   border: 1px solid grey;
@@ -49,7 +49,7 @@ body {
   margin: 1rem 0;
 }
 
-.post-content pre{
+.post-content pre {
   background-color: rgb(16, 16, 16);
   padding: 1.5rem;
   border: none;
