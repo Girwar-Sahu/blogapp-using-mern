@@ -5,7 +5,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Button, Textarea } from "flowbite-react";
 
-function Comment({ comment, onLike, onEdit }) {
+function Comment({ comment, onLike, onEdit, onDelete }) {
   const { currentUser } = useSelector((state) => state.user);
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -33,6 +33,7 @@ function Comment({ comment, onLike, onEdit }) {
     setIsEditing(true);
     setEditedContent(comment.content);
   };
+  const clickDelete = () => {};
   const handleSave = async () => {
     try {
       const res = await api.put(
@@ -42,7 +43,7 @@ function Comment({ comment, onLike, onEdit }) {
       const data = res.data;
       if (res.statusText === "OK") {
         setIsEditing(false);
-        onEdit(comment,editedContent);
+        onEdit(comment, editedContent);
       }
     } catch (error) {
       console.log(error);
@@ -117,13 +118,22 @@ function Comment({ comment, onLike, onEdit }) {
               </p>
               {currentUser &&
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                  <button
-                    onClick={clickEdit}
-                    type="button"
-                    className="text-gray-400 hover:text-blue-500"
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      onClick={clickEdit}
+                      type="button"
+                      className="text-gray-400 hover:text-blue-500"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(comment._id)}
+                      type="button"
+                      className="text-gray-400 hover:text-red-500"
+                    >
+                      Delete
+                    </button>
+                  </>
                 )}
             </div>
           </>
