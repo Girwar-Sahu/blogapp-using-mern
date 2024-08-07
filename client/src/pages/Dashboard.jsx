@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 const DashProfile = lazy(()=> import('../components/DashProfile'))
 const DashPosts = lazy(()=> import('../components/DashPost'))
 const DashUsers = lazy(()=> import('../components/DashUsers'))
-const DashNewPost = lazy(()=> import('./CreatePost'))
 import DashSidebar from "../components/DashSidebar";
+import DashComment from "../components/DashComment";
 
 
 function Dashboard() {
@@ -29,9 +29,9 @@ function Dashboard() {
           <DashProfile />
         </Suspense>
       )}
-      {tab === "newpost" && (
+      {tab === "comment" && (
         <Suspense fallback={<p>Loading...</p>}>
-          <DashNewPost />
+          <DashComment />
         </Suspense>
       )}
       {tab === "post" && (

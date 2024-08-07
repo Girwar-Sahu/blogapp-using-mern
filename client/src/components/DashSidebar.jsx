@@ -6,9 +6,8 @@ import {
   HiArrowSmRight,
   HiDocumentText,
   HiOutlineUserGroup,
-  HiOutlinePlusCircle,
 } from "react-icons/hi";
-
+import { HiChatBubbleBottomCenterText } from "react-icons/hi2";
 import { signoutSuccess } from "../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../axios.config.js";
@@ -59,15 +58,6 @@ function DashSidebar() {
           </Link>
           {currentUser.isAdmin && (
             <>
-              <Link to="/dashboard?tab=newpost">
-                <Sidebar.Item
-                  active={tab === "newpost"}
-                  icon={HiOutlinePlusCircle}
-                  as="div"
-                >
-                  New post
-                </Sidebar.Item>
-              </Link>
               <Link to="/dashboard?tab=post">
                 <Sidebar.Item
                   active={tab === "post"}
@@ -75,6 +65,15 @@ function DashSidebar() {
                   as="div"
                 >
                   Posts
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=comment">
+                <Sidebar.Item
+                  active={tab === "comment"}
+                  icon={HiChatBubbleBottomCenterText}
+                  as="div"
+                >
+                  Comments
                 </Sidebar.Item>
               </Link>
               <Link to="/dashboard?tab=users">
