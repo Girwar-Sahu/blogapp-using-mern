@@ -71,7 +71,7 @@ function CreatePost() {
       }
       if (res.statusText === "Created") {
         setPublishError(null);
-        navigate(`/post/${data.slug}`);
+        navigate(`/post/${data._id}`);
       }
     } catch (error) {
       setPublishError(error.message);

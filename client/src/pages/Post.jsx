@@ -4,12 +4,14 @@ import api from "../axios.config.js";
 import { Button, Spinner } from "flowbite-react";
 import CalltoAction from "../components/CalltoAction.jsx";
 import CommentSection from "../components/CommentSection.jsx";
+import PostCard from "../components/PostCard.jsx";
 
 function Post() {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  const [recentPost, setRecentPost] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -17,7 +19,6 @@ function Post() {
         setLoading(true);
         const res = await api.get(`/post/getpost/${postId}`);
         const data = res.data;
-       
 
         if (data.success === false) {
           setError(data.message);
@@ -35,6 +36,25 @@ function Post() {
     };
     fetchPost();
   }, [postId]);
+
+  useEffect(() => {
+    const fetchRecentPost = async () => {
+      try {
+        const res = await api.get(`/post/getposts?limit=3`);
+        const data = res.data;
+
+        if (data.success === false) {
+          console.log(data.message);
+        }
+        if (res.statusText === "OK") {
+          setRecentPost(data.posts);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchRecentPost();
+  }, []);
 
   if (loading)
     return (
@@ -74,6 +94,13 @@ function Post() {
         <CalltoAction />
       </div>
       <CommentSection postId={post && post._id} />
+      <div className="flex flex-col justify-center items-center mb-5">
+        <h1 className="text-xl mt-5">Recent articles</h1>
+        <div className="flex flex-wrap gap-5 mt-5 justify-center">
+          {recentPost &&
+            recentPost.map((post) => <PostCard key={post._id} post={post} />)}
+        </div>
+      </div>
     </main>
   );
 }

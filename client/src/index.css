@@ -38,25 +38,27 @@ body {
 }
 
 .dark .post-content pre {
-  background-color: rgba(24, 23, 23, 0.632);
-  padding: 1.5rem;
-  border: 1px solid grey;
-  font-family: "DM Mono", monospace;
-  font-weight: 400;
-  border-radius: 1rem;
-  color: rgb(239, 236, 236);
-  text-wrap: wrap;
-  margin: 1rem 0;
-}
-
-.post-content pre {
-  background-color: rgb(16, 16, 16);
+  background-color: #1E293B;
   padding: 1.5rem;
   border: none;
   font-family: "DM Mono", monospace;
   font-weight: 400;
-  border-radius: 1rem;
-  color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  color: #DDDDDD;
+  text-wrap: wrap;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.post-content pre {
+  background-color: #0F172A;
+  padding: 1.5rem;
+  border: none;
+  font-family: "DM Mono", monospace;
+  font-weight: 400;
+  border-radius: 0.5rem;
+  color: #DDDDDD;
   text-wrap: wrap;
   margin: 1rem 0;
+  overflow-x: auto;
 }
