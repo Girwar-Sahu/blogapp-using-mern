@@ -1,11 +1,11 @@
-import React, {lazy, Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-const DashProfile = lazy(()=> import('../components/DashProfile'))
-const DashPosts = lazy(()=> import('../components/DashPost'))
-const DashUsers = lazy(()=> import('../components/DashUsers'))
+const DashProfile = lazy(() => import("../components/DashProfile"));
+const DashPosts = lazy(() => import("../components/DashPost"));
+const DashUsers = lazy(() => import("../components/DashUsers"));
+const DashComment = lazy(() => import("../components/DashComment"));
+const Dash = lazy(() => import("../components/Dashboard"));
 import DashSidebar from "../components/DashSidebar";
-import DashComment from "../components/DashComment";
-
 
 function Dashboard() {
   const location = useLocation();
@@ -42,6 +42,11 @@ function Dashboard() {
       {tab === "users" && (
         <Suspense fallback={<p>Loading...</p>}>
           <DashUsers />
+        </Suspense>
+      )}
+      {tab === "dash" && (
+        <Suspense fallback={<p>Loading...</p>}>
+          <Dash />
         </Suspense>
       )}
     </div>

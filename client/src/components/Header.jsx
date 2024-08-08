@@ -30,7 +30,10 @@ function Header() {
   };
 
   return (
-    <Navbar className="border-b-2">
+    <Navbar
+      fluid={true}
+      className="sticky top-0 z-10 border-b-2 dark:bg-[#0C1224]"
+    >
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -76,6 +79,15 @@ function Header() {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
+            {currentUser.isAdmin && (
+              <>
+                <Link to="/dashboard?tab=dash">
+                  <Dropdown.Item>Dashboard</Dropdown.Item>
+                </Link>
+                <Dropdown.Divider />
+              </>
+            )}
+
             <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (

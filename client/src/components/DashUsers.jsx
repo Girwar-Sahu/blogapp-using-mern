@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import api from "../axios.config.js";
 import { useSelector } from "react-redux";
 import { Button, Table, Modal } from "flowbite-react";
-import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 

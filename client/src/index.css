@@ -38,27 +38,32 @@ body {
 }
 
 .dark .post-content pre {
-  background-color: #1E293B;
+  background-color: #1e293b;
   padding: 1.5rem;
   border: none;
   font-family: "DM Mono", monospace;
   font-weight: 400;
   border-radius: 0.5rem;
-  color: #DDDDDD;
+  color: #dddddd;
   text-wrap: wrap;
   overflow-x: auto;
   margin: 1rem 0;
 }
 
 .post-content pre {
-  background-color: #0F172A;
+  background-color: #0f172a;
   padding: 1.5rem;
   border: none;
   font-family: "DM Mono", monospace;
   font-weight: 400;
   border-radius: 0.5rem;
-  color: #DDDDDD;
+  color: #dddddd;
   text-wrap: wrap;
   margin: 1rem 0;
   overflow-x: auto;
+}
+
+.dark nav[aria-label="Sidebar"] > div,
+.dark tr[data-testid="table-row-element"] {
+  background-color: #0c1224 !important;
 }

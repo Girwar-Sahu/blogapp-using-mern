@@ -84,7 +84,7 @@ function DashPost() {
               <Table.HeadCell>Delete</Table.HeadCell>
               <Table.HeadCell>Edit</Table.HeadCell>
             </Table.Head>
-            <Table.Body className="divide-y">
+            <Table.Body className="divide-y dark:!bg-[#0C1224]">
               {userPosts.map((post) => (
                 <Table.Row
                   key={post._id}
