@@ -5,13 +5,15 @@ import api from "../axios.config.js";
 function PostCard({ post }) {
   return (
     <div className="group relative w-full border border-teal-500 hover:border-2 transition-all h-[400px] overflow-hidden rounded-lg sm:w-[360px]">
-      <Link to={`/post/${post._id}`}>
-        <img
-          src={post.imageURL}
-          alt={post.slug}
-          className="h-[260px] w-full object-cover group-hover:h-[200px] transition-all duration-300 z-20"
-        />
-      </Link>
+      <div className="bg-gray-500">
+        <Link to={`/post/${post._id}`}>
+          <img
+            src={post.imageURL}
+            alt={post.slug}
+            className="h-[260px] w-full object-cover group-hover:h-[200px] transition-all duration-300 z-20"
+          />
+        </Link>
+      </div>
       <div className="p-3 flex flex-col gap-2">
         <p className="text-lg line-clamp-2 font-semibold">{post.title}</p>
         <span className="italic text-sm">{post.category}</span>

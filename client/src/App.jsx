@@ -14,6 +14,7 @@ const SignUpPage = lazy(() => import("./pages/SignUp"));
 const CreatePostPage = lazy(() => import("./pages/CreatePost"));
 const UpdatePostPage = lazy(() => import("./pages/UpdatePost"));
 const PostPage = lazy(() => import("./pages/Post"));
+const SearchPage = lazy(() => import("./pages/Search"));
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
           element={
             <Suspense fallback={<p>Loading...</p>}>
               <PostPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Suspense fallback={<p>Loading...</p>}>
+              <SearchPage />
             </Suspense>
           }
         />
