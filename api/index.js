@@ -7,13 +7,16 @@ import postRoute from "./routes/post.route.js";
 import commentRoute from "./routes/comment.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import path from "path";
 dotenv.config();
+
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
   optionSuccessStatus: 200,
 };
+
+const __dirname = path.resolve();
 
 const app = express();
 const clientOptions = {
@@ -23,6 +26,7 @@ const clientOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname,'client/dist')))
 
 const connect = async () => {
   try {
@@ -38,7 +42,9 @@ app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 app.use("/api/comment", commentRoute);
-
+app.get('*',(req, res)=> {
+  res.sendFile(path.join(__dirname,'client','dist','index.html'))
+})
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
   const message = error.message || "internal server error";
