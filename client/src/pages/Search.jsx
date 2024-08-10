@@ -105,13 +105,14 @@ function Search() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b md:border-r md:min-h-screen border-gray-500">
+      <div className="p-7 dark:bg-[#0C1224] md:min-h-screen">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
-              Search Term:{" "}
+              Search Term:
             </label>
             <TextInput
+            className="flex-grow"
               placeholder="search.."
               id="searchTerm"
               type="text"
@@ -120,8 +121,8 @@ function Search() {
             />
           </div>
           <div className="flex items-center gap-2">
-            <label className="whitespace-nowrap font-semibold">Sort:</label>
-            <Select onChange={handleChange} value={sidebarData.sort} id="sort">
+            <label className="whitespace-nowrap font-semibold">Sort By:</label>
+            <Select className="flex-grow " onChange={handleChange} value={sidebarData.sort} id="sort">
               <option value="desc">Latest</option>
               <option value="asc">Oldest</option>
             </Select>
@@ -129,6 +130,7 @@ function Search() {
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">Category:</label>
             <Select
+            className="flex-grow"
               onChange={handleChange}
               value={sidebarData.category}
               id="category"
