@@ -6,6 +6,13 @@ const DashUsers = lazy(() => import("../components/DashUsers"));
 const DashComment = lazy(() => import("../components/DashComment"));
 const Dash = lazy(() => import("../components/Dashboard"));
 import DashSidebar from "../components/DashSidebar";
+import { Spinner } from "flowbite-react";
+
+const loading = (
+  <div className="w-full mx-auto flex flex-col md:flex-row items-center justify-center min-h-screen">
+    <Spinner size="lg" />
+  </div>
+);
 
 function Dashboard() {
   const location = useLocation();
@@ -25,27 +32,27 @@ function Dashboard() {
         <DashSidebar />
       </div>
       {tab === "profile" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={loading}>
           <DashProfile />
         </Suspense>
       )}
       {tab === "comment" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={loading}>
           <DashComment />
         </Suspense>
       )}
       {tab === "post" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={loading}>
           <DashPosts />
         </Suspense>
       )}
       {tab === "users" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={loading}>
           <DashUsers />
         </Suspense>
       )}
       {tab === "dash" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={loading}>
           <Dash />
         </Suspense>
       )}

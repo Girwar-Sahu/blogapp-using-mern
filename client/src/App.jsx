@@ -15,6 +15,13 @@ const CreatePostPage = lazy(() => import("./pages/CreatePost"));
 const UpdatePostPage = lazy(() => import("./pages/UpdatePost"));
 const PostPage = lazy(() => import("./pages/Post"));
 const SearchPage = lazy(() => import("./pages/Search"));
+import { Spinner } from "flowbite-react";
+
+const loading = (
+  <div className="flex justify-center items-center min-h-screen">
+    <Spinner size="xl" />
+  </div>
+);
 
 function App() {
   return (
@@ -25,7 +32,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <HomePage />
             </Suspense>
           }
@@ -33,7 +40,7 @@ function App() {
         <Route
           path="/post/:postId"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <PostPage />
             </Suspense>
           }
@@ -41,7 +48,7 @@ function App() {
         <Route
           path="/search"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <SearchPage />
             </Suspense>
           }
@@ -49,7 +56,7 @@ function App() {
         <Route
           path="/about"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <AboutPage />
             </Suspense>
           }
@@ -58,7 +65,7 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <Suspense fallback={<p>Loading...</p>}>
+              <Suspense fallback={loading}>
                 <DashboardPage />
               </Suspense>
             }
@@ -67,7 +74,7 @@ function App() {
         <Route
           path="/project"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <ProjectPage />
             </Suspense>
           }
@@ -75,7 +82,7 @@ function App() {
         <Route
           path="/signin"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <SignInPage />
             </Suspense>
           }
@@ -83,7 +90,7 @@ function App() {
         <Route
           path="/signup"
           element={
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={loading}>
               <SignUpPage />
             </Suspense>
           }
@@ -92,7 +99,7 @@ function App() {
           <Route
             path="/create-post"
             element={
-              <Suspense fallback={<p>Loading...</p>}>
+              <Suspense fallback={loading}>
                 <CreatePostPage />
               </Suspense>
             }
@@ -100,7 +107,7 @@ function App() {
           <Route
             path="/update-post/:postId"
             element={
-              <Suspense fallback={<p>Loading...</p>}>
+              <Suspense fallback={loading}>
                 <UpdatePostPage />
               </Suspense>
             }
