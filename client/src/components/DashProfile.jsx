@@ -112,7 +112,7 @@ function DashProfile() {
         setUpdateDataError(data.message);
         dispatch(updateFailure(data.message));
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(updateSuccess(data));
         setUpdateDataSuccess("User's profile updated successfully");
       }
@@ -131,7 +131,7 @@ function DashProfile() {
       if (data.success === false) {
         dispatch(deleteFailure(data.message));
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(deletSuccess());
       }
     } catch (error) {
@@ -146,7 +146,7 @@ function DashProfile() {
       if (data.success === false) {
         console.log(data.message);
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(signoutSuccess());
       }
     } catch (error) {

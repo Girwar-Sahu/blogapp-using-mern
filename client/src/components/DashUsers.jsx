@@ -17,7 +17,7 @@ function DashUsers() {
       try {
         const res = await api.get(`/user/getusers/${currentUser._id}`);
         const data = res.data;
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setUsers(data.users);
           if (data.users.length < 9) {
             setShowMore(false);
@@ -40,7 +40,7 @@ function DashUsers() {
       );
 
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setUsers((prev) => [...prev, ...data.users]);
         if (data.users.length < 9) {
           setShowMore(false);
@@ -59,7 +59,7 @@ function DashUsers() {
         `/user/delete/${userIdToDelete}`
       );
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
       }
       if (data.success === false) {

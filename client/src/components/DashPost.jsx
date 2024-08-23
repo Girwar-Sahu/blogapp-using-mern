@@ -17,7 +17,7 @@ function DashPost() {
       try {
         const res = await api.get(`/post/getposts?userId=${currentUser._id}`);
         const data = res.data;
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setUserPosts(data.posts);
           if (data.posts.length < 9) {
             setShowMore(false);
@@ -40,7 +40,7 @@ function DashPost() {
       );
 
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setUserPosts((prev) => [...prev, ...data.posts]);
         if (data.posts.length < 9) {
           setShowMore(false);
@@ -58,7 +58,7 @@ function DashPost() {
         `/post/delete/${postIdToDelete}/${currentUser._id}`
       );
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setUserPosts((prev) =>
           prev.filter((post) => post._id !== postIdToDelete)
         );

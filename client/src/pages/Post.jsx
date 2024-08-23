@@ -24,7 +24,7 @@ function Post() {
           setError(data.message);
           setLoading(false);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setPost(data);
           setLoading(false);
           setError(null);
@@ -46,7 +46,7 @@ function Post() {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setRecentPost(data.posts);
         }
       } catch (error) {

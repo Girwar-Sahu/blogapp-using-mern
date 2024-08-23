@@ -17,7 +17,7 @@ function DashComment() {
       try {
         const res = await api.get(`/comment/getcomment`);
         const data = res.data;
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setComments(data.comments);
           if (data.comments.length < 9) {
             setShowMore(false);
@@ -40,7 +40,7 @@ function DashComment() {
       );
 
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setComments((prev) => [...prev, ...data.comments]);
         if (data.comments.length < 9) {
           setShowMore(false);
@@ -56,7 +56,7 @@ function DashComment() {
     try {
       const res = await api.delete(`/comment/delete/${commentIdToDelete}`);
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setComments((prev) =>
           prev.filter((comment) => comment._id !== commentIdToDelete)
         );

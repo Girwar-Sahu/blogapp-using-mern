@@ -34,7 +34,7 @@ function DashSidebar() {
       if (data.success === false) {
         console.log(data.message);
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(signoutSuccess());
       }
     } catch (error) {

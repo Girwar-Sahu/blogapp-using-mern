@@ -32,7 +32,7 @@ function SignUp() {
       if (data.success === false) {
         return dispatch(signUpFailure(data.message));
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(signUpSuccess());
         navigate("/signin");
       }

@@ -27,7 +27,7 @@ function OAuth() {
       );
       const data = res.data;
       console.log(data);
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(signInSuccess(data));
         navigate("/");
       }

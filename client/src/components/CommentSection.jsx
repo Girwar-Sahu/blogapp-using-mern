@@ -24,7 +24,7 @@ function CommentSection({ postId }) {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setComments(data);
         }
       } catch (error) {
@@ -54,7 +54,7 @@ function CommentSection({ postId }) {
       if (data.success === false) {
         setCommentError(data.message);
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setComment("");
         setCommentError(null);
         setComments([data, ...comments]);
@@ -72,7 +72,7 @@ function CommentSection({ postId }) {
       }
       const res = await api.put(`/comment/like/${commentId}`);
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setComments(
           comments.map((comment) =>
             comment._id === commentId
@@ -106,7 +106,7 @@ function CommentSection({ postId }) {
         return;
       }
       const res = await api.delete(`/comment/delete/${commentId}`);
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setComments(comments.filter((c) => c._id !== commentId));
       }
     } catch (error) {

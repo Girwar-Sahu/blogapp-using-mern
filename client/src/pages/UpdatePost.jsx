@@ -35,7 +35,7 @@ function UpdatePost() {
           setPublishError(data.message);
           return;
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setPublishError(null);
           setFormData(data);
         }
@@ -97,7 +97,7 @@ function UpdatePost() {
         setPublishError(data.message);
         return;
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setPublishError(null);
         navigate(`/post/${data._id}`);
       }

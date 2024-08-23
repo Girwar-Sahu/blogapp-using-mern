@@ -43,7 +43,7 @@ function Search() {
           setLoading(false);
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setPosts(data.posts);
           setLoading(false);
           if (data.posts.length < 9) {
@@ -92,7 +92,7 @@ function Search() {
     try {
       const res = await api.get(`/post/getposts?${searchQuery}`);
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setPosts((prev) => [...prev, ...data.posts]);
         if (data.posts.length < 9) {
           setShowMore(false);

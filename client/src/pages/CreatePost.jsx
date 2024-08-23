@@ -69,7 +69,7 @@ function CreatePost() {
         setPublishError(data.message);
         return;
       }
-      if (res.statusText === "Created") {
+      if (res.status === 201) {
         setPublishError(null);
         navigate(`/post/${data._id}`);
       }

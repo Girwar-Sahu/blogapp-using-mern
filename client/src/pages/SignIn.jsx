@@ -34,7 +34,7 @@ function SignIn() {
       if (data.success === false) {
         return dispatch(signInFailure(data.message));
       }
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         dispatch(signInSuccess(data));
         navigate("/dashboard?tab=profile");
       }

@@ -31,7 +31,7 @@ function Dashboard() {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setUsers(data.users);
           setTotalUsers(data.totalUsers);
           setLastMonthsUsers(data.lastMonthUser);
@@ -47,7 +47,7 @@ function Dashboard() {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setPosts(data.posts);
           setTotalPosts(data.totalPost);
           setLastMonthsPosts(data.lastMonthPost);
@@ -63,7 +63,7 @@ function Dashboard() {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setComments(data.comments);
           setTotalComments(data.totalComments);
           setLastMonthsComments(data.lastMonthComments);

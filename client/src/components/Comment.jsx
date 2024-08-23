@@ -19,7 +19,7 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
         if (data.success === false) {
           console.log(data.message);
         }
-        if (res.statusText === "OK") {
+        if (res.status === 200) {
           setUser(data);
         }
       } catch (error) {
@@ -33,7 +33,7 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
     setIsEditing(true);
     setEditedContent(comment.content);
   };
-  const clickDelete = () => {};
+  
   const handleSave = async () => {
     try {
       const res = await api.put(
@@ -41,7 +41,7 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
         JSON.stringify({ content: editedContent })
       );
       const data = res.data;
-      if (res.statusText === "OK") {
+      if (res.status === 200) {
         setIsEditing(false);
         onEdit(comment, editedContent);
       }
