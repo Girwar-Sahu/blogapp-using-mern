@@ -47,9 +47,9 @@ function SignUp() {
         <div className="flex-1">
           <Link to="/" className="text-4xl font-bold dark:text-white">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-lg text-white">
-              Girwar's
+              Blogi
             </span>
-            Blog
+            Fy
           </Link>
           <p className="text-sm mt-5">
             this is a demo project, You can sing up with your email and password
