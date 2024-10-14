@@ -85,7 +85,7 @@ function FooterCom() {
           <Footer.Copyright
             className="flex justify-center"
             href="#"
-            by="Girwar's Blog"
+            by="BlogiFy"
             year={new Date().getFullYear()}
           />
           <div className="flex gap-6 sm:mt-0 mt-4 justify-center">
